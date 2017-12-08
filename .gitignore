@@ -1,0 +1,13 @@
+# Created by .ignore support plugin (hsz.mobi)
+/.idea/
+/xmjf-admin/target/
+/xmjf-admin/xmjf-admin.iml
+/xmjf-api/target/
+/xmjf-api/xmjf-api.iml
+/xmjf-code-generate/target/
+/xmjf-code-generate/xmjf-code-generate.iml
+/xmjf-server/target/
+/xmjf-server/xmjf-server.iml
+/xmjf-web/target/
+/xmjf-web/xmjf-web.iml
+/xmjf-par.iml

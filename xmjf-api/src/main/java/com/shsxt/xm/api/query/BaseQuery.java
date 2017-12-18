@@ -1,6 +1,9 @@
-package com.shsxt.xm.server.base;
+package com.shsxt.xm.api.query;
 
-public class BaseQuery {
+import java.io.Serializable;
+
+public class BaseQuery implements Serializable{
+	private static final long serialVersionUID = 7983741380528264076L;
 	private Integer pageNum=1;
 	private Integer pageSize=10;
 

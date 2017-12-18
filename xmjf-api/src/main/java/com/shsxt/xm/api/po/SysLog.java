@@ -1,8 +1,10 @@
 package com.shsxt.xm.api.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class SysLog {
+public class SysLog implements Serializable{
+    private static final long serialVersionUID = -6052785163039077781L;
     private Integer id;
 
     private Integer userId;

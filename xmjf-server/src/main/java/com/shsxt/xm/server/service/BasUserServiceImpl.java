@@ -81,6 +81,26 @@ public class BasUserServiceImpl implements IBasUserService {
         initSysLog(userId);
     }
 
+    @Override
+    public BasUser userLogin(String phone, String password) {
+        AssertUtil.isTrue(StringUtils.isBlank(phone),"手机号非空!");
+        AssertUtil.isTrue(StringUtils.isBlank(password),"密码非空!");
+        BasUser basUser=basUserDao.queryBasUserByPhone(phone);
+        AssertUtil.isTrue(null==basUser,"该用户不存在!");
+        String salt=basUser.getSalt();
+        password=MD5.toMD5(password+salt);
+        AssertUtil.isTrue(!password.equals(basUser.getPassword()),"密码不正确!");
+        return basUser;
+    }
+
+    @Override
+    public BasUser quickLogin(String phone) {
+        AssertUtil.isTrue(StringUtils.isBlank(phone),"手机号非空!");
+        BasUser basUser=basUserDao.queryBasUserByPhone(phone);
+        AssertUtil.isTrue(null==basUser,"该用户不存在!");
+        return basUser;
+    }
+
     private void initSysLog(Integer userId) {
         SysLog sysLog=new SysLog();
         sysLog.setAddtime(new Date());

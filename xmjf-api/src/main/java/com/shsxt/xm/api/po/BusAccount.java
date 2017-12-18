@@ -1,8 +1,10 @@
 package com.shsxt.xm.api.po;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class BusAccount {
+public class BusAccount implements Serializable{
+    private static final long serialVersionUID = -3810032618653057279L;
     private Integer id;
 
     private Integer userId;
@@ -81,5 +83,19 @@ public class BusAccount {
 
     public void setRepay(BigDecimal repay) {
         this.repay = repay;
+    }
+
+    @Override
+    public String toString() {
+        return "BusAccount{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", total=" + total +
+                ", usable=" + usable +
+                ", cash=" + cash +
+                ", frozen=" + frozen +
+                ", wait=" + wait +
+                ", repay=" + repay +
+                '}';
     }
 }

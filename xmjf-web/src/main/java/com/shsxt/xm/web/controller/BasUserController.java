@@ -4,6 +4,8 @@ import com.shsxt.xm.api.constant.P2PConstant;
 import com.shsxt.xm.api.exceptions.ParamsExcetion;
 import com.shsxt.xm.api.model.ResultInfo;
 import com.shsxt.xm.api.po.BasUser;
+import com.shsxt.xm.api.po.BasUserSecurity;
+import com.shsxt.xm.api.service.IBasUserSecurityService;
 import com.shsxt.xm.api.service.IBasUserService;
 import com.sun.jndi.rmi.registry.ReferenceWrapper_Stub;
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 
@@ -23,6 +26,9 @@ import java.util.Date;
 public class BasUserController {
     @Resource
     private IBasUserService basUserService;
+
+    @Resource
+    private IBasUserSecurityService basUserSecurityService;
 
 
 
@@ -82,6 +88,121 @@ public class BasUserController {
         }catch (Exception e){
             resultInfo.setCode(P2PConstant.OPS_FAILED_CODE);
             resultInfo.setMsg(P2PConstant.OPS_FAILED_MSG);
+        }
+        return resultInfo;
+    }
+
+
+    @RequestMapping("userLogin")
+    @ResponseBody
+    public  ResultInfo userLogin(String phone,String password,HttpSession session){
+        ResultInfo resultInfo=new ResultInfo();
+        try {
+            BasUser basUser= basUserService.userLogin(phone,password);
+            session.setAttribute("userInfo",basUser);
+        } catch (ParamsExcetion e) {
+            e.printStackTrace();
+            resultInfo.setCode(P2PConstant.OPS_FAILED_CODE);
+            resultInfo.setMsg(e.getErrorMsg());
+        }catch (Exception e){
+            resultInfo.setCode(P2PConstant.OPS_FAILED_CODE);
+            resultInfo.setMsg(P2PConstant.OPS_FAILED_MSG);
+        }
+        return resultInfo;
+    }
+
+
+    @RequestMapping("quickLogin")
+    @ResponseBody
+    public  ResultInfo quickLogin(String phone,String picCode,String code,HttpSession session){
+       ResultInfo resultInfo=new ResultInfo();
+        String sessionPicCode= (String) session.getAttribute(P2PConstant.PICTURE_VERIFY_CODE);
+        if(StringUtils.isBlank(sessionPicCode)){
+            resultInfo.setCode(P2PConstant.OPS_FAILED_CODE);
+            resultInfo.setMsg("验证码已失效!");
+            return  resultInfo;
+        }
+        if(!picCode.equals(sessionPicCode)){
+            resultInfo.setCode(P2PConstant.OPS_FAILED_CODE);
+            resultInfo.setMsg("验证码不匹配!");
+            return  resultInfo;
+        }
+        // 发送验证码时间
+        Date sessionTime= (Date) session.getAttribute(P2PConstant.PHONE_VERIFY_CODE_EXPIRE_TIME+phone);
+        if(null==sessionTime){
+            resultInfo.setCode(P2PConstant.OPS_FAILED_CODE);
+            resultInfo.setMsg("手机验证码已失效!");
+            return  resultInfo;
+        }
+        Date currTime=new Date();
+        long time=(currTime.getTime()-sessionTime.getTime())/1000;
+        if(time>180){
+            resultInfo.setCode(P2PConstant.OPS_FAILED_CODE);
+            resultInfo.setMsg("手机验证码已失效!");
+            return  resultInfo;
+        }
+        String sessionCode= (String) session.getAttribute(P2PConstant.PHONE_VERIFY_CODE+phone);
+        if(!sessionCode.equals(code)){
+            resultInfo.setCode(P2PConstant.OPS_FAILED_CODE);
+            resultInfo.setMsg("手机验证码不正确!");
+            return  resultInfo;
+        }
+        try {
+          BasUser basUser=  basUserService.quickLogin(phone);
+          session.setAttribute("userInfo",basUser);
+        } catch (ParamsExcetion e) {
+            e.printStackTrace();
+            resultInfo.setCode(P2PConstant.OPS_FAILED_CODE);
+            resultInfo.setMsg(e.getErrorMsg());
+        }catch (Exception e){
+            resultInfo.setCode(P2PConstant.OPS_FAILED_CODE);
+            resultInfo.setMsg(P2PConstant.OPS_FAILED_MSG);
+        }
+        return resultInfo;
+    }
+
+    @RequestMapping("exit")
+    public  String exit(HttpServletRequest request){
+        request.getSession().removeAttribute("userInfo");
+        request.setAttribute("ctx",request.getContextPath());
+        return "login";
+    }
+
+    @RequestMapping("userAuthCheck")
+    @ResponseBody
+    public  ResultInfo userAuthCheck(HttpServletRequest request){
+        BasUser basUser= (BasUser) request.getSession().getAttribute("userInfo");
+        return basUserSecurityService.userAuthCheck(basUser.getId());
+    }
+
+
+    /**
+     * 转发到用户认证页面
+     * @param request
+     * @return
+     */
+    @RequestMapping("auth")
+    public  String toAuthPage(HttpServletRequest request){
+        request.setAttribute("ctx",request.getContextPath());
+        return "user/auth";
+    }
+
+
+    @RequestMapping("userAuth")
+    @ResponseBody
+    public  ResultInfo doUserAuth(String realName,String idCard,String businessPassword,String confirmPassword,HttpSession session){
+        BasUser basUser= (BasUser) session.getAttribute("userInfo");
+        ResultInfo resultInfo=new ResultInfo();
+        try {
+            basUserSecurityService.doUserAuth(realName,idCard,businessPassword,confirmPassword,basUser.getId());
+        } catch (ParamsExcetion e) {
+            e.printStackTrace();
+            resultInfo.setMsg(e.getErrorMsg());
+            resultInfo.setCode(P2PConstant.OPS_FAILED_CODE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultInfo.setMsg(P2PConstant.OPS_FAILED_MSG);
+            resultInfo.setCode(P2PConstant.OPS_FAILED_CODE);
         }
         return resultInfo;
     }

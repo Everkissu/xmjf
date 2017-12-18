@@ -1,5 +1,7 @@
-/.idea/*
+/.idea/
 /xmjf-admin/xmjf-admin.iml
 /xmjf-api/xmjf-api.iml
 /xmjf-server/xmjf-server.iml
-/.idea/
+/xmjf-admin/target/
+/xmjf-api/target/
+/xmjf-server/target/

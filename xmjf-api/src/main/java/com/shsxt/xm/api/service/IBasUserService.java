@@ -16,4 +16,19 @@ public interface IBasUserService {
      * @param password
      */
     public  void saveBasUser(String phone,String password);
+
+    /**
+     * 手机号+密码登录
+     * @param phone
+     * @param password
+     * @return
+     */
+    public  BasUser userLogin(String phone,String password);
+
+    /**
+     * 快捷登录
+     * @param phone
+     * @return
+     */
+    public BasUser quickLogin(String phone);
 }

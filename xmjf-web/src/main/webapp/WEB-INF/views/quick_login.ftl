@@ -34,7 +34,7 @@
                     </p>
                     <p class="login_input_password">
                         <input type="text" id="verification" placeholder="请输入验证码" class="login-input-verification"/>
-                        <input type="button" id="clickMes02" class="obtain" value="获取验证码"/>
+                        <input type="button" id="clickMes" class="obtain" value="获取验证码"/>
                     </p>
                 </div>
                 <div class="keep-password">

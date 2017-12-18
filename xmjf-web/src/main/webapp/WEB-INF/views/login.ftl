@@ -37,7 +37,7 @@
                 <div class="forget-passwrod">
                     <div class="forget-passwrod-center">
                         <a href="${ctx}/forgetPassword" style="cursor: pointer;color: #ff5e5e;float: left;font-size: 16px">忘记密码？</a>
-                        <a href="${ctx}/quickLogin" style="cursor: pointer;color: #606060;float: right;font-size: 16px">
+                        <a href="${ctx}/quickLoginPage" style="cursor: pointer;color: #606060;float: right;font-size: 16px">
                             快捷登录
                         </a>
                     </div>

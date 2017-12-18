@@ -49,11 +49,14 @@ public class SmsController {
         }
         try {
             String code=RandomCodesUtils.createRandom(true,4);
-            smsService.sendPhoneSms(phone,code,type);
+            System.out.println("code:"+code);
+           // smsService.sendPhoneSms(phone,code,type);
             //  手机验证码 存入session
             session.setAttribute(P2PConstant.PHONE_VERIFY_CODE+phone,code);
             // 发送手机验证码当前时间存入session
             session.setAttribute(P2PConstant.PHONE_VERIFY_CODE_EXPIRE_TIME+phone,new Date());
+            Date time= (Date) session.getAttribute(P2PConstant.PHONE_VERIFY_CODE_EXPIRE_TIME+phone);
+            System.out.println("time:"+time);
         } catch (ParamsExcetion e) {
             e.printStackTrace();
             resultInfo.setCode(P2PConstant.OPS_FAILED_CODE);

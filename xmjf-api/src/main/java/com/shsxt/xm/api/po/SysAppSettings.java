@@ -1,6 +1,9 @@
 package com.shsxt.xm.api.po;
 
-public class SysAppSettings {
+import java.io.Serializable;
+
+public class SysAppSettings implements Serializable{
+    private static final long serialVersionUID = 6653265059038081497L;
     private Integer id;
 
     private Integer userId;

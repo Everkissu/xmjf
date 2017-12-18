@@ -1,8 +1,10 @@
 package com.shsxt.xm.api.po;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class BusUserStat extends BusUserStatKey {
+public class BusUserStat extends BusUserStatKey  implements Serializable{
+    private static final long serialVersionUID = 392430096074854609L;
     private Integer rechargeCount;
 
     private BigDecimal rechargeAmount;

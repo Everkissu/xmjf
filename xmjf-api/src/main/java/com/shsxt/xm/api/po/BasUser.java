@@ -1,8 +1,10 @@
 package com.shsxt.xm.api.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class BasUser {
+public class BasUser implements Serializable{
+    private static final long serialVersionUID = -1861609083349457782L;
     private Integer id;
 
     private String username;

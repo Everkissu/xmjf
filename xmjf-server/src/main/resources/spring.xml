@@ -17,6 +17,7 @@
         http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
     <context:property-placeholder location="classpath:jdbc.properties" />
     <context:component-scan base-package="com.shsxt.xm"></context:component-scan>
+    <!--<aop:aspectj-autoproxy/>-->
     <!-- 配置数据源 -->
     <!-- 配置c3p0 数据源 -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
@@ -26,13 +27,16 @@
         <property name="password" value="${jdbc.password}"></property>
     </bean>
     <!-- 配置事务管理器 -->
-    <bean id="txManager"
+    <bean id="transactionManage"
           class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"></property>
     </bean>
+     <!--<tx:annotation-driven/>-->
+
+
 
     <!-- 设置事物增强 -->
-    <tx:advice id="txAdvice" transaction-manager="txManager">
+    <tx:advice id="txAdvice" transaction-manager="transactionManage">
         <tx:attributes>
             <tx:method name="get*" read-only="true" />
             <tx:method name="find*" read-only="true" />
@@ -71,9 +75,15 @@
     <!--
       zookeeper 注册中心  暴露服务地址
     -->
-    <dubbo:registry protocol="zookeeper" timeout="30000"  address="zookeeper://192.168.2.107:2181"></dubbo:registry>
+    <dubbo:registry protocol="zookeeper" timeout="30000"  address="zookeeper://192.168.2.165:2181"></dubbo:registry>
     <dubbo:protocol name="dubbo" port="20880"/>
     <dubbo:service interface="com.shsxt.xm.api.service.IBasUserService" ref="basUserServiceImpl"></dubbo:service>
     <dubbo:service interface="com.shsxt.xm.api.service.ISmsService" ref="smsServiceImpl"></dubbo:service>
-
+     <dubbo:service interface="com.shsxt.xm.api.service.IBasItemService" ref="basItemServiceImpl"></dubbo:service>
+    <dubbo:service interface="com.shsxt.xm.api.service.IBusAccountService" ref="busAccountServiceImpl"></dubbo:service>
+    <dubbo:service interface="com.shsxt.xm.api.service.IBasUserSecurityService" ref="basUserSecurityServiceImpl"></dubbo:service>
+    <dubbo:service interface="com.shsxt.xm.api.service.IBusItemLoanService" ref="busItemLoanServiceImpl"></dubbo:service>
+    <dubbo:service interface="com.shsxt.xm.api.service.ISysPictureService" ref
+    ="sysPictureServiceImpl"></dubbo:service>
+    <dubbo:service interface="com.shsxt.xm.api.service.IBusItemInvestService" ref="busItemInvestServiceImpl"></dubbo:service>
 </beans>

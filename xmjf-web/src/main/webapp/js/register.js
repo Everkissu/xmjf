@@ -8,7 +8,7 @@ $(function () {
     });
 
     function  swithPicCode() {
-        $(this).attr("src",ctx+"/img/getPictureVerifyImage?time="+new Date());
+        $(".validImg").attr("src",ctx+"/img/getPictureVerifyImage?time="+new Date());
     }
 
     /**

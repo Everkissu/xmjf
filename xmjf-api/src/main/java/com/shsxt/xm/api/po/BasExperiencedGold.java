@@ -1,9 +1,11 @@
 package com.shsxt.xm.api.po;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class BasExperiencedGold {
+public class BasExperiencedGold implements Serializable{
+    private static final long serialVersionUID = 6736818662444668172L;
     private Integer id;
 
     private Integer userId;

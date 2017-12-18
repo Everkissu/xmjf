@@ -9,6 +9,7 @@ import com.shsxt.xm.server.constant.TaoBaoConstant;
 import com.taobao.api.ApiException;
 import com.taobao.api.DefaultTaobaoClient;
 import com.taobao.api.TaobaoClient;
+import com.taobao.api.internal.util.TaobaoContext;
 import com.taobao.api.request.AlibabaAliqinFcSmsNumSendRequest;
 import com.taobao.api.response.AlibabaAliqinFcSmsNumSendResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -46,16 +47,16 @@ public class SmsServiceImpl implements ISmsService {
              */
            BasUser basUser= basUserService.queryBasUserByPhone(phone);
            AssertUtil.isTrue(null!=basUser,"该手机号已注册!");
-           doSend(phone,code);
+           //doSend(phone,code, TaoBaoConstant.SMS_TEMATE_CODE_REGISTER);
         }
         if(type.equals(SmsType.NOTIFY.getType())){
-            doSend(phone,code);
+            //doSend(phone,code,TaoBaoConstant.SMS_TEMATE_CODE_lOGIN);
         }
     }
 
 
-    public  void doSend(String phone, String code){
-        TaobaoClient client = new DefaultTaobaoClient(TaoBaoConstant.SERVER_URL,
+    public  void doSend(String phone, String code,String templateCode){
+       /* TaobaoClient client = new DefaultTaobaoClient(TaoBaoConstant.SERVER_URL,
                 TaoBaoConstant.APP_KEY,TaoBaoConstant.APP_SECRET);
         AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
         req.setExtend("");
@@ -65,14 +66,14 @@ public class SmsServiceImpl implements ISmsService {
         map.put("code",code);
         req.setSmsParamString(JSON.toJSONString(map));
         req.setRecNum(phone);
-        req.setSmsTemplateCode(TaoBaoConstant.SMS_TEMATE_CODE);
+        req.setSmsTemplateCode(templateCode);
         AlibabaAliqinFcSmsNumSendResponse rsp = null;
         try {
            rsp = client.execute(req);
           AssertUtil.isTrue(!rsp.isSuccess(),"短信发送失败,请稍后再试!");
         } catch (ApiException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
 

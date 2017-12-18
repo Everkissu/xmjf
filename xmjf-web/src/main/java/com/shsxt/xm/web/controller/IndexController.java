@@ -31,6 +31,12 @@ public class IndexController {
         return "login";
     }
 
+    @RequestMapping("quickLoginPage")
+    public  String quickLoginPage(HttpServletRequest request){
+        request.setAttribute("ctx",request.getContextPath());
+        return "quick_login";
+    }
+
     /**
      * 返回注册视图
      * @return

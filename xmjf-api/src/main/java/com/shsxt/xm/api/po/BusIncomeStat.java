@@ -1,8 +1,10 @@
 package com.shsxt.xm.api.po;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class BusIncomeStat {
+public class BusIncomeStat implements Serializable{
+    private static final long serialVersionUID = -8106758115618794913L;
     private Integer id;
 
     private Integer userId;

@@ -1,6 +1,9 @@
 package com.shsxt.xm.api.po;
 
-public class BusUserIntegral {
+import java.io.Serializable;
+
+public class BusUserIntegral implements Serializable{
+    private static final long serialVersionUID = -2942146831338960837L;
     private Integer id;
 
     private Integer userId;

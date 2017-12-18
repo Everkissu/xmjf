@@ -72,8 +72,14 @@
     <!-- 消费⽅应⽤名， ⽤于计算依赖关系， 不是匹配条件， 不要与提供⽅⼀样 -->
     <dubbo:application name="xmjf-web-consumer"  />
     <!-- 使⽤multicast⼴播注册中⼼暴露发现服务地址 -->
-    <dubbo:registry protocol="zookeeper" address="zookeeper://192.168.2.107:2181"  timeout="30000"/>
+    <dubbo:registry protocol="zookeeper" address="zookeeper://192.168.2.165:2181"  timeout="30000"/>
     <!-- ⽣成远程服务代理， 可以和本地bean⼀样使⽤demoService -->
     <dubbo:reference id="basUserService" interface="com.shsxt.xm.api.service.IBasUserService" />
     <dubbo:reference id="smsService" interface="com.shsxt.xm.api.service.ISmsService" />
+    <dubbo:reference id="basItemService" interface="com.shsxt.xm.api.service.IBasItemService"/>
+    <dubbo:reference id="busAccountService" interface="com.shsxt.xm.api.service.IBusAccountService" />
+    <dubbo:reference id="basUserSecurityService" interface="com.shsxt.xm.api.service.IBasUserSecurityService"/>
+    <dubbo:reference id="busItemLoanService" interface="com.shsxt.xm.api.service.IBusItemLoanService"/>
+    <dubbo:reference  id="sysPictureService" interface="com.shsxt.xm.api.service.ISysPictureService" />
+    <dubbo:reference  id="busItemInvestService" interface="com.shsxt.xm.api.service.IBusItemInvestService"/>
 </beans>

@@ -1,5 +1,6 @@
 package com.shsxt.xm.server.base;
 
+import com.shsxt.xm.api.query.BaseQuery;
 import org.springframework.dao.DataAccessException;
 
 import java.util.List;
